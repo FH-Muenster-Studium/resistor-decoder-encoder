@@ -11,6 +11,18 @@ Resistor::Resistor(Resistor::Type type, uint64_t ohm, float tolerance, uint8_t t
     this->temperature_coefficient = temperature_coefficient;
 }
 
-int Resistor::getOhm() {
+uint64_t Resistor::getOhm() {
     return this->ohm;
+}
+
+Resistor::Type Resistor::getType() {
+    return this->type;
+}
+
+uint64_t Resistor::getTolerance() {
+    return this->tolerance;
+}
+
+uint64_t Resistor::getTemperatureCoefficient() {
+    return this->temperature_coefficient;
 }

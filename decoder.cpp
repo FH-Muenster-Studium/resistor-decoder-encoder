@@ -76,70 +76,70 @@ uint64_t Decoder::colorToOhm(const std::vector<Color> &colors) {
     return ohm;
 }
 
-bool Decoder::colorToTemperatureCoefficient(Color color, uint8_t &multiplier) {
+bool Decoder::colorToTemperatureCoefficient(Color color, uint8_t &temperatureCoefficient) {
     switch (color) {
         case BLACK:
-            multiplier = 250;
+            temperatureCoefficient = 250;
             return true;
         case BROWN:
-            multiplier = 100;
+            temperatureCoefficient = 100;
             return true;
         case RED:
-            multiplier = 50;
+            temperatureCoefficient = 50;
             return true;
         case ORANGE:
-            multiplier = 15;
+            temperatureCoefficient = 15;
             return true;
         case YELLOW:
-            multiplier = 25;
+            temperatureCoefficient = 25;
             return true;
         case GREEN:
-            multiplier = 20;
+            temperatureCoefficient = 20;
             return true;
         case BLUE:
-            multiplier = 10;
+            temperatureCoefficient = 10;
             return true;
         case VIOLET:
-            multiplier = 5;
+            temperatureCoefficient = 5;
             return true;
         case GREY:
-            multiplier = 1;
+            temperatureCoefficient = 1;
             return true;
         default:
             return false;
     }
 }
 
-bool Decoder::decode4Band(Color color1, Color color2, Color multiplier, Color tolerance, Resistor &resistor) {
+Decoder::Result Decoder::decode4Band(Color color1, Color color2, Color multiplier, Color tolerance, Resistor &resistor) {
     float multiplierValue;
-    colorToMultiplier(multiplier, multiplierValue);
+    if (!colorToMultiplier(multiplier, multiplierValue)) return MULTIPLIER_DECODE_FAILED;
     uint64_t ohm = colorToOhm({color1, color2}) * (uint8_t) multiplier;
     float toleranceValue;
-    colorToTolerance(tolerance, toleranceValue);
+    if (!colorToTolerance(tolerance, toleranceValue)) return TOLERANCE_DECODE_FAILED;
     resistor = Resistor(Resistor::BAND4, ohm, toleranceValue, 0);
-    return true;
+    return OK;
 }
 
-bool
+Decoder::Result
 Decoder::decode5Band(Color color1, Color color2, Color color3, Color multiplier, Color tolerance, Resistor &resistor) {
     float multiplierValue;
-    colorToMultiplier(multiplier, multiplierValue);
+    if (!colorToMultiplier(multiplier, multiplierValue)) return MULTIPLIER_DECODE_FAILED;
     uint64_t ohm = colorToOhm({color1, color2, color3}) * (uint8_t) multiplier;
     float toleranceValue;
-    colorToTolerance(tolerance, toleranceValue);
+    if (!colorToTolerance(tolerance, toleranceValue)) return TOLERANCE_DECODE_FAILED;
     resistor = Resistor(Resistor::BAND5, ohm, toleranceValue, 0);
-    return true;
+    return OK;
 }
 
-bool
+Decoder::Result
 Decoder::decode6Band(Color color1, Color color2, Color color3, Color multiplier, Color tolerance, Color temperatureCoefficient, Resistor &resistor) {
     float multiplierValue;
-    colorToMultiplier(multiplier, multiplierValue);
+    if (!colorToMultiplier(multiplier, multiplierValue)) return MULTIPLIER_DECODE_FAILED;
     uint64_t ohm = colorToOhm({color1, color2, color3}) * (uint8_t) multiplier;
     float toleranceValue;
-    colorToTolerance(tolerance, toleranceValue);
+    if (!colorToTolerance(tolerance, toleranceValue)) return TOLERANCE_DECODE_FAILED;
     uint8_t temperatureCoefficientValue;
-    colorToTemperatureCoefficient(temperatureCoefficient, temperatureCoefficientValue);
+    if(!colorToTemperatureCoefficient(temperatureCoefficient, temperatureCoefficientValue)) return TEMPERATURE_COEFFICIENT_DECODE_FAILED;
     resistor = Resistor(Resistor::BAND5, ohm, toleranceValue, temperatureCoefficientValue);
-    return true;
+    return OK;
 }

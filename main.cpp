@@ -3,9 +3,9 @@
 
 int main() {
     Resistor resistor{};
-    bool result = Decoder::decode4Band(Color::BLACK, Color::BLACK, Color::BLACK, Color::BLACK, resistor);
-    if (!result) {
-        std::cout << "decode failed" << std::endl;
+    bool result = Decoder::decode4Band(Color::BLACK, Color::BLACK, Color::BLACK, Color::BROWN, resistor);
+    if (result != Decoder::Result::OK) {
+        std::cout << "decode failed " << result << std::endl;
     } else {
         std::cout << std::to_string(resistor.getOhm()) << std::endl;
     }
