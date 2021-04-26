@@ -76,6 +76,40 @@ uint64_t Decoder::colorToOhm(const std::vector<Color> &colors) {
     return ohm;
 }
 
+bool Decoder::colorToTemperatureCoefficient(Color color, uint8_t &multiplier) {
+    switch (color) {
+        case BLACK:
+            multiplier = 250;
+            return true;
+        case BROWN:
+            multiplier = 100;
+            return true;
+        case RED:
+            multiplier = 50;
+            return true;
+        case ORANGE:
+            multiplier = 15;
+            return true;
+        case YELLOW:
+            multiplier = 25;
+            return true;
+        case GREEN:
+            multiplier = 20;
+            return true;
+        case BLUE:
+            multiplier = 10;
+            return true;
+        case VIOLET:
+            multiplier = 5;
+            return true;
+        case GREY:
+            multiplier = 1;
+            return true;
+        default:
+            return false;
+    }
+}
+
 bool Decoder::decode4Band(Color color1, Color color2, Color multiplier, Color tolerance, Resistor &resistor) {
     float multiplierValue;
     colorToMultiplier(multiplier, multiplierValue);
@@ -94,5 +128,18 @@ Decoder::decode5Band(Color color1, Color color2, Color color3, Color multiplier,
     float toleranceValue;
     colorToTolerance(tolerance, toleranceValue);
     resistor = Resistor(Resistor::BAND5, ohm, toleranceValue, 0);
+    return true;
+}
+
+bool
+Decoder::decode6Band(Color color1, Color color2, Color color3, Color multiplier, Color tolerance, Color temperatureCoefficient, Resistor &resistor) {
+    float multiplierValue;
+    colorToMultiplier(multiplier, multiplierValue);
+    uint64_t ohm = colorToOhm({color1, color2, color3}) * (uint8_t) multiplier;
+    float toleranceValue;
+    colorToTolerance(tolerance, toleranceValue);
+    uint8_t temperatureCoefficientValue;
+    colorToTemperatureCoefficient(temperatureCoefficient, temperatureCoefficientValue);
+    resistor = Resistor(Resistor::BAND5, ohm, toleranceValue, temperatureCoefficientValue);
     return true;
 }
