@@ -17,13 +17,13 @@ public:
 
     Resistor(Type type, uint64_t ohm, float tolerance, uint8_t temperature_coefficient);
 
-    Type getType();
+    [[nodiscard]] Type getType() const;
 
-    uint64_t getOhm();
+    [[nodiscard]] uint64_t getOhm() const;
 
-    uint64_t getTolerance();
+    [[nodiscard]] uint64_t getTolerance() const;
 
-    uint64_t getTemperatureCoefficient();
+    [[nodiscard]] uint64_t getTemperatureCoefficient() const;
 
 private:
     Type type;
