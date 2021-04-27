@@ -12,6 +12,7 @@
 #include "tolerance_color.h"
 #include <vector>
 #include <string>
+#include <cmath>
 
 class Decoder {
 

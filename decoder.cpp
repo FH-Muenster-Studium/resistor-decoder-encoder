@@ -47,11 +47,9 @@ float Decoder::colorToMultiplier(MultiplierColor color) {
 }
 
 uint64_t Decoder::colorToOhm(const std::vector<Color> &colors) {
-    uint8_t decimal = 1;
     uint64_t ohm = 0;
-    for (Color color : colors) {
-        ohm += (uint8_t) color * decimal;
-        decimal *= 10;
+    for (int i = 0, length = colors.size();i < length;i++) {
+        ohm += ((uint8_t) colors[i]) * std::pow(10, i);
     }
     return ohm;
 }
