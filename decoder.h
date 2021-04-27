@@ -16,26 +16,26 @@
 class Decoder {
 
 public:
-    enum Result {
-        OK,
-        TOLERANCE_DECODE_FAILED,
-        MULTIPLIER_DECODE_FAILED,
-        TEMPERATURE_COEFFICIENT_DECODE_FAILED,
-        OHM_DECODE_FAILED,
-        INVALID_SIZE
-    };
+    static float colorToTolerance(ToleranceColor color);
 
-    static bool colorToTolerance(ToleranceColor color, float& tolerance);
-    static bool colorToMultiplier(MultiplierColor color, float& multiplier);
-    static uint64_t colorToOhm(const std::vector<Color>& colors);
-    static bool colorToTemperatureCoefficient(TemperatureCoefficientColor color, uint8_t &temperatureCoefficient);
-    static std::string result_to_string(Decoder::Result result);
+    static float colorToMultiplier(MultiplierColor color);
+
+    static uint64_t colorToOhm(const std::vector<Color> &colors);
+
+    static uint8_t colorToTemperatureCoefficient(TemperatureCoefficientColor color);
+
     static std::string color_to_string(Color color);
+
     static std::string type_to_string(Resistor::Type type);
-    static Result decode4Band(const std::vector<Color> &colors, MultiplierColor multiplier, ToleranceColor tolerance, Resistor &resistor);
-    static Result decode5Band(const std::vector<Color> &colors, MultiplierColor multiplier, ToleranceColor tolerance, Resistor &resistor);
-    static Decoder::Result decode6Band(const std::vector<Color> &colors, MultiplierColor multiplier, ToleranceColor tolerance,
-                                         TemperatureCoefficientColor temperatureCoefficient, Resistor &resistor);
+
+    static void decode4Band(const std::vector<Color> &colors, MultiplierColor multiplier, ToleranceColor tolerance,
+                            Resistor &resistor);
+
+    static void decode5Band(const std::vector<Color> &colors, MultiplierColor multiplier, ToleranceColor tolerance,
+                            Resistor &resistor);
+
+    static void decode6Band(const std::vector<Color> &colors, MultiplierColor multiplier, ToleranceColor tolerance,
+                            TemperatureCoefficientColor temperatureCoefficient, Resistor &resistor);
 };
 
 #endif //PRAKTIKUM_1_DECODER_H
