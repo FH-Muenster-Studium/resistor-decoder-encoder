@@ -49,7 +49,7 @@ float Decoder::colorToMultiplier(MultiplierColor color) {
 uint64_t Decoder::colorToOhm(const std::vector<Color> &colors) {
     uint64_t ohm = 0;
     for (int i = 0, length = colors.size();i < length;i++) {
-        ohm += ((uint8_t) colors[i]) * std::pow(10, i);
+        ohm += ((uint8_t) colors[i]) * std::pow(10, length - i - 1);
     }
     return ohm;
 }
@@ -63,7 +63,7 @@ uint8_t Decoder::colorToTemperatureCoefficient(TemperatureCoefficientColor color
         case TemperatureCoefficientColor::RED:
             return 50;
         case TemperatureCoefficientColor::ORANGE:
-            return 5;
+            return 15;
         case TemperatureCoefficientColor::YELLOW:
             return 25;
         case TemperatureCoefficientColor::GREEN:
@@ -122,17 +122,17 @@ std::string Decoder::type_to_string(Resistor::Type type) {
 }
 
 void Decoder::decode4Band(const std::vector<Color> &colors, MultiplierColor multiplier, ToleranceColor tolerance, Resistor &resistor) {
-    uint64_t ohm = colorToOhm(colors) * colorToMultiplier(multiplier);
-    resistor = Resistor(Resistor::Type::BAND4, ohm, colorToTolerance(tolerance), 0);
+    double ohm = colorToOhm(colors) * colorToMultiplier(multiplier);
+    resistor = Resistor(Resistor::Type::BAND4, ohm, colorToTolerance(tolerance));
 }
 
 void Decoder::decode5Band(const std::vector<Color> &colors, MultiplierColor multiplier, ToleranceColor tolerance, Resistor &resistor) {
-    uint64_t ohm = colorToOhm(colors) * colorToMultiplier(multiplier);
-    resistor = Resistor(Resistor::Type::BAND5, ohm, colorToTolerance(tolerance), 0);
+    double ohm = colorToOhm(colors) * colorToMultiplier(multiplier);
+    resistor = Resistor(Resistor::Type::BAND5, ohm, colorToTolerance(tolerance));
 }
 
 void Decoder::decode6Band(const std::vector<Color> &colors, MultiplierColor multiplier, ToleranceColor tolerance,
                      TemperatureCoefficientColor temperatureCoefficient, Resistor &resistor) {
-    uint64_t ohm = colorToOhm(colors) * colorToMultiplier(multiplier);
-    resistor = Resistor(Resistor::Type::BAND6, ohm, colorToTolerance(tolerance), colorToTemperatureCoefficient(temperatureCoefficient));
+    double ohm = colorToOhm(colors) * colorToMultiplier(multiplier);
+    resistor = Resistor(ohm, colorToTolerance(tolerance), colorToTemperatureCoefficient(temperatureCoefficient));
 }

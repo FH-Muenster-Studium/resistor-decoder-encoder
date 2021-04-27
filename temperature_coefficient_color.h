@@ -2,8 +2,7 @@
 // Created by Fabian Terhorst on 27.04.21.
 //
 
-#ifndef PRAKTIKUM_1_TEMPERATURE_COEFFICIENT_COLOR_H
-#define PRAKTIKUM_1_TEMPERATURE_COEFFICIENT_COLOR_H
+#pragma once
 
 #include "color.h"
 
@@ -18,5 +17,3 @@ enum class TemperatureCoefficientColor : uint8_t {
     VIOLET = (uint8_t) Color::VIOLET,
     GREY = (uint8_t) Color::GREY
 };
-
-#endif //PRAKTIKUM_1_TEMPERATURE_COEFFICIENT_COLOR_H

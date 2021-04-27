@@ -2,8 +2,7 @@
 // Created by Fabian Terhorst on 27.04.21.
 //
 
-#ifndef PRAKTIKUM_1_TOLERANCE_COLOR_H
-#define PRAKTIKUM_1_TOLERANCE_COLOR_H
+#pragma once
 
 #include "color.h"
 
@@ -16,5 +15,3 @@ enum class ToleranceColor : uint8_t {
     GOLD = (uint8_t) Color::GOLD,
     SILVER = (uint8_t) Color::SILVER
 };
-
-#endif //PRAKTIKUM_1_TOLERANCE_COLOR_H

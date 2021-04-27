@@ -2,8 +2,7 @@
 // Created by Fabian Terhorst on 26.04.21.
 //
 
-#ifndef PRAKTIKUM_1_COLOR_H
-#define PRAKTIKUM_1_COLOR_H
+#pragma once
 
 #include <cstdint>
 
@@ -21,5 +20,3 @@ enum class Color : uint8_t {
     GOLD,
     SILVER
 };
-
-#endif //PRAKTIKUM_1_COLOR_H

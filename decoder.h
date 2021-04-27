@@ -2,8 +2,7 @@
 // Created by Fabian Terhorst on 26.04.21.
 //
 
-#ifndef PRAKTIKUM_1_DECODER_H
-#define PRAKTIKUM_1_DECODER_H
+#pragma once
 
 #include "resistor.h"
 #include "color.h"
@@ -38,5 +37,3 @@ public:
     static void decode6Band(const std::vector<Color> &colors, MultiplierColor multiplier, ToleranceColor tolerance,
                             TemperatureCoefficientColor temperatureCoefficient, Resistor &resistor);
 };
-
-#endif //PRAKTIKUM_1_DECODER_H
