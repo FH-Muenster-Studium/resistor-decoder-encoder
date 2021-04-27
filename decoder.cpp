@@ -46,7 +46,7 @@ float Decoder::colorToMultiplier(MultiplierColor color) {
     }
 }
 
-uint64_t Decoder::colorToOhm(const std::vector<Color> &colors) {
+uint64_t Decoder::colorToOhm(const std::vector<OhmColor> &colors) {
     uint64_t ohm = 0;
     for (int i = 0, length = colors.size();i < length;i++) {
         ohm += ((uint8_t) colors[i]) * std::pow(10, length - i - 1);
@@ -121,17 +121,17 @@ std::string Decoder::type_to_string(Resistor::Type type) {
     }
 }
 
-void Decoder::decode4Band(const std::vector<Color> &colors, MultiplierColor multiplier, ToleranceColor tolerance, Resistor &resistor) {
+void Decoder::decode4Band(const std::vector<OhmColor> &colors, MultiplierColor multiplier, ToleranceColor tolerance, Resistor &resistor) {
     double ohm = colorToOhm(colors) * colorToMultiplier(multiplier);
     resistor = Resistor(Resistor::Type::BAND4, ohm, colorToTolerance(tolerance));
 }
 
-void Decoder::decode5Band(const std::vector<Color> &colors, MultiplierColor multiplier, ToleranceColor tolerance, Resistor &resistor) {
+void Decoder::decode5Band(const std::vector<OhmColor> &colors, MultiplierColor multiplier, ToleranceColor tolerance, Resistor &resistor) {
     double ohm = colorToOhm(colors) * colorToMultiplier(multiplier);
     resistor = Resistor(Resistor::Type::BAND5, ohm, colorToTolerance(tolerance));
 }
 
-void Decoder::decode6Band(const std::vector<Color> &colors, MultiplierColor multiplier, ToleranceColor tolerance,
+void Decoder::decode6Band(const std::vector<OhmColor> &colors, MultiplierColor multiplier, ToleranceColor tolerance,
                      TemperatureCoefficientColor temperatureCoefficient, Resistor &resistor) {
     double ohm = colorToOhm(colors) * colorToMultiplier(multiplier);
     resistor = Resistor(ohm, colorToTolerance(tolerance), colorToTemperatureCoefficient(temperatureCoefficient));

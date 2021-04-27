@@ -9,6 +9,7 @@
 #include "temperature_coefficient_color.h"
 #include "multiplier_color.h"
 #include "tolerance_color.h"
+#include "ohm_color.h"
 #include <vector>
 #include <string>
 #include <cmath>
@@ -20,7 +21,7 @@ public:
 
     static float colorToMultiplier(MultiplierColor color);
 
-    static uint64_t colorToOhm(const std::vector<Color> &colors);
+    static uint64_t colorToOhm(const std::vector<OhmColor> &colors);
 
     static uint8_t colorToTemperatureCoefficient(TemperatureCoefficientColor color);
 
@@ -28,12 +29,12 @@ public:
 
     static std::string type_to_string(Resistor::Type type);
 
-    static void decode4Band(const std::vector<Color> &colors, MultiplierColor multiplier, ToleranceColor tolerance,
+    static void decode4Band(const std::vector<OhmColor> &colors, MultiplierColor multiplier, ToleranceColor tolerance,
                             Resistor &resistor);
 
-    static void decode5Band(const std::vector<Color> &colors, MultiplierColor multiplier, ToleranceColor tolerance,
+    static void decode5Band(const std::vector<OhmColor> &colors, MultiplierColor multiplier, ToleranceColor tolerance,
                             Resistor &resistor);
 
-    static void decode6Band(const std::vector<Color> &colors, MultiplierColor multiplier, ToleranceColor tolerance,
+    static void decode6Band(const std::vector<OhmColor> &colors, MultiplierColor multiplier, ToleranceColor tolerance,
                             TemperatureCoefficientColor temperatureCoefficient, Resistor &resistor);
 };

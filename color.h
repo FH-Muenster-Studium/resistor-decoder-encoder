@@ -17,6 +17,6 @@ enum class Color : uint8_t {
     VIOLET = 7,
     GREY = 8,
     WHITE = 9,
-    GOLD,
-    SILVER
+    GOLD = 10,
+    SILVER = 11
 };

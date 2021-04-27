@@ -3,7 +3,7 @@
 #include "decoder.h"
 #include "encoder.h"
 
-void decode(const std::vector<Color> &colors, MultiplierColor multiplierColor, ToleranceColor toleranceColor,
+void decode(const std::vector<OhmColor> &colors, MultiplierColor multiplierColor, ToleranceColor toleranceColor,
             TemperatureCoefficientColor temperatureCoefficientColor) {
     Resistor resistor{};
     Decoder::decode6Band(colors, multiplierColor, toleranceColor, temperatureCoefficientColor,
@@ -12,7 +12,7 @@ void decode(const std::vector<Color> &colors, MultiplierColor multiplierColor, T
     std::cout << "---colors---" << std::endl;
     int i = 0;
     for (int length = colors.size(); i < length; i++) {
-        std::cout << "color" << std::to_string(i) << ": " << Decoder::color_to_string(colors[i]) << std::endl;
+        std::cout << "color" << std::to_string(i) << ": " << Decoder::color_to_string((Color) colors[i]) << std::endl;
     }
     std::cout << "color" << std::to_string(i++) << ": " << Decoder::color_to_string((Color) multiplierColor)
               << std::endl;
@@ -36,7 +36,7 @@ void encode(double ohm, float tolerance, uint8_t temperatureCoefficient) {
 }
 
 int main() {
-    decode({Color::RED, Color::VIOLET, Color::YELLOW}, MultiplierColor::BLACK, ToleranceColor::BROWN,
+    decode({OhmColor::RED, OhmColor::VIOLET, OhmColor::YELLOW}, MultiplierColor::BLACK, ToleranceColor::BROWN,
            TemperatureCoefficientColor::GREEN);
     encode(274, 2, 0);
     return 0;
