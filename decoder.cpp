@@ -4,27 +4,27 @@
 
 #include "decoder.h"
 
-bool Decoder::colorToTolerance(Color color, float &tolerance) {
+bool Decoder::colorToTolerance(ToleranceColor color, float &tolerance) {
     switch (color) {
-        case BROWN:
+        case ToleranceColor::BROWN:
             tolerance = 1;
             return true;
-        case RED:
+        case ToleranceColor::RED:
             tolerance = 2;
             return true;
-        case GREEN:
+        case ToleranceColor::GREEN:
             tolerance = 0.5;
             return true;
-        case BLUE:
+        case ToleranceColor::BLUE:
             tolerance = 0.25;
             return true;
-        case VIOLET:
+        case ToleranceColor::VIOLET:
             tolerance = 0.1;
             return true;
-        case GOLD:
+        case ToleranceColor::GOLD:
             tolerance = 5;
             return true;
-        case SILVER:
+        case ToleranceColor::SILVER:
             tolerance = 10;
             return true;
         default:
@@ -32,33 +32,33 @@ bool Decoder::colorToTolerance(Color color, float &tolerance) {
     }
 }
 
-bool Decoder::colorToMultiplier(Color color, float &multiplier) {
+bool Decoder::colorToMultiplier(MultiplierColor color, float &multiplier) {
     switch (color) {
-        case BLACK:
+        case MultiplierColor::BLACK:
             multiplier = 1;
             return true;
-        case BROWN:
+        case MultiplierColor::BROWN:
             multiplier = 10;
             return true;
-        case RED:
+        case MultiplierColor::RED:
             multiplier = 100;
             return true;
-        case ORANGE:
+        case MultiplierColor::ORANGE:
             multiplier = 1 * 1000;
             return true;
-        case YELLOW:
+        case MultiplierColor::YELLOW:
             multiplier = 10 * 1000;
             return true;
-        case GREEN:
+        case MultiplierColor::GREEN:
             multiplier = 100 * 1000;
             return true;
-        case BLUE:
+        case MultiplierColor::BLUE:
             multiplier = 1 * 1000 * 1000;
             return true;
-        case GOLD:
+        case MultiplierColor::GOLD:
             multiplier = 0.1;
             return true;
-        case SILVER:
+        case MultiplierColor::SILVER:
             multiplier = 0.01;
             return true;
         default:
@@ -76,33 +76,33 @@ uint64_t Decoder::colorToOhm(const std::vector<Color> &colors) {
     return ohm;
 }
 
-bool Decoder::colorToTemperatureCoefficient(Color color, uint8_t &temperatureCoefficient) {
+bool Decoder::colorToTemperatureCoefficient(TemperatureCoefficientColor color, uint8_t &temperatureCoefficient) {
     switch (color) {
-        case BLACK:
+        case TemperatureCoefficientColor::BLACK:
             temperatureCoefficient = 250;
             return true;
-        case BROWN:
+        case TemperatureCoefficientColor::BROWN:
             temperatureCoefficient = 100;
             return true;
-        case RED:
+        case TemperatureCoefficientColor::RED:
             temperatureCoefficient = 50;
             return true;
-        case ORANGE:
+        case TemperatureCoefficientColor::ORANGE:
             temperatureCoefficient = 15;
             return true;
-        case YELLOW:
+        case TemperatureCoefficientColor::YELLOW:
             temperatureCoefficient = 25;
             return true;
-        case GREEN:
+        case TemperatureCoefficientColor::GREEN:
             temperatureCoefficient = 20;
             return true;
-        case BLUE:
+        case TemperatureCoefficientColor::BLUE:
             temperatureCoefficient = 10;
             return true;
-        case VIOLET:
+        case TemperatureCoefficientColor::VIOLET:
             temperatureCoefficient = 5;
             return true;
-        case GREY:
+        case TemperatureCoefficientColor::GREY:
             temperatureCoefficient = 1;
             return true;
         default:
@@ -130,29 +130,29 @@ std::string Decoder::result_to_string(Decoder::Result result) {
 
 std::string Decoder::color_to_string(Color color) {
     switch (color) {
-        case BLACK:
+        case Color::BLACK:
             return "Black";
-        case BROWN:
+        case Color::BROWN:
             return "Brown";
-        case RED:
+        case Color::RED:
             return "Red";
-        case ORANGE:
+        case Color::ORANGE:
             return "Orange";
-        case YELLOW:
+        case Color::YELLOW:
             return "Yellow";
-        case GREEN:
+        case Color::GREEN:
             return "Green";
-        case BLUE:
+        case Color::BLUE:
             return "Blue";
-        case VIOLET:
+        case Color::VIOLET:
             return "Violet";
-        case GREY:
+        case Color::GREY:
             return "Grey";
-        case WHITE:
+        case Color::WHITE:
             return "White";
-        case GOLD:
+        case Color::GOLD:
             return "Gold";
-        case SILVER:
+        case Color::SILVER:
             return "Silver";
         default:
             return "Unknown";
@@ -172,52 +172,38 @@ std::string Decoder::type_to_string(Resistor::Type type) {
     }
 }
 
-Decoder::Result Decoder::decode(const std::vector<Color> &colors, Resistor &resistor) {
-    if (colors.size() == 4) {
-        return decode4Band(colors[0], colors[1], colors[2], colors[3], resistor);
-    }
-    if (colors.size() == 5) {
-        return decode5Band(colors[0], colors[1], colors[2], colors[3], colors[4], resistor);
-    }
-    if (colors.size() == 6) {
-        return decode6Band(colors[0], colors[1], colors[2], colors[3], colors[4], colors[5], resistor);
-    }
-    return Decoder::INVALID_SIZE;
-}
-
 Decoder::Result
-Decoder::decode4Band(Color color1, Color color2, Color multiplier, Color tolerance, Resistor &resistor) {
+Decoder::decode4Band(const std::vector<Color> &colors, MultiplierColor multiplier, ToleranceColor tolerance, Resistor &resistor) {
     float multiplierValue;
     if (!colorToMultiplier(multiplier, multiplierValue)) return MULTIPLIER_DECODE_FAILED;
-    uint64_t ohm = colorToOhm({color1, color2}) * multiplierValue;
+    uint64_t ohm = colorToOhm(colors) * multiplierValue;
     float toleranceValue;
     if (!colorToTolerance(tolerance, toleranceValue)) return TOLERANCE_DECODE_FAILED;
-    resistor = Resistor(Resistor::BAND4, ohm, toleranceValue, 0);
+    resistor = Resistor(Resistor::Type::BAND4, ohm, toleranceValue, 0);
     return OK;
 }
 
 Decoder::Result
-Decoder::decode5Band(Color color1, Color color2, Color color3, Color multiplier, Color tolerance, Resistor &resistor) {
+Decoder::decode5Band(const std::vector<Color> &colors, MultiplierColor multiplier, ToleranceColor tolerance, Resistor &resistor) {
     float multiplierValue;
     if (!colorToMultiplier(multiplier, multiplierValue)) return MULTIPLIER_DECODE_FAILED;
-    uint64_t ohm = colorToOhm({color1, color2, color3}) * multiplierValue;
+    uint64_t ohm = colorToOhm(colors) * multiplierValue;
     float toleranceValue;
     if (!colorToTolerance(tolerance, toleranceValue)) return TOLERANCE_DECODE_FAILED;
-    resistor = Resistor(Resistor::BAND5, ohm, toleranceValue, 0);
+    resistor = Resistor(Resistor::Type::BAND5, ohm, toleranceValue, 0);
     return OK;
 }
 
-Decoder::Result
-Decoder::decode6Band(Color color1, Color color2, Color color3, Color multiplier, Color tolerance,
-                     Color temperatureCoefficient, Resistor &resistor) {
+Decoder::Result Decoder::decode6Band(const std::vector<Color> &colors, MultiplierColor multiplier, ToleranceColor tolerance,
+                     TemperatureCoefficientColor temperatureCoefficient, Resistor &resistor) {
     float multiplierValue;
     if (!colorToMultiplier(multiplier, multiplierValue)) return MULTIPLIER_DECODE_FAILED;
-    uint64_t ohm = colorToOhm({color1, color2, color3}) * multiplierValue;
+    uint64_t ohm = colorToOhm(colors) * multiplierValue;
     float toleranceValue;
     if (!colorToTolerance(tolerance, toleranceValue)) return TOLERANCE_DECODE_FAILED;
     uint8_t temperatureCoefficientValue;
     if (!colorToTemperatureCoefficient(temperatureCoefficient, temperatureCoefficientValue))
         return TEMPERATURE_COEFFICIENT_DECODE_FAILED;
-    resistor = Resistor(Resistor::BAND6, ohm, toleranceValue, temperatureCoefficientValue);
+    resistor = Resistor(Resistor::Type::BAND6, ohm, toleranceValue, temperatureCoefficientValue);
     return OK;
 }

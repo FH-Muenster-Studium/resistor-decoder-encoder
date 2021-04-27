@@ -7,7 +7,7 @@
 
 #include <cstdint>
 
-enum Color : uint8_t {
+enum class Color : uint8_t {
     BLACK = 0,
     BROWN = 1,
     RED = 2,

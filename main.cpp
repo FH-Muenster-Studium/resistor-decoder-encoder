@@ -1,14 +1,16 @@
 #include <iostream>
 #include "decoder.h"
 
-void decode(const std::vector<Color>& colors) {
+void decode(const std::vector<Color> &colors, MultiplierColor multiplierColor, ToleranceColor toleranceColor,
+            TemperatureCoefficientColor temperatureCoefficientColor) {
     Resistor resistor{};
-    Decoder::Result result = Decoder::decode(colors, resistor);
+    Decoder::Result result = Decoder::decode6Band(colors, multiplierColor, toleranceColor, temperatureCoefficientColor,
+                                                  resistor);
     if (result != Decoder::Result::OK) {
         std::cout << "decode failed " << Decoder::result_to_string(result) << std::endl;
     } else {
         std::cout << "---colors---" << std::endl;
-        for (int i = 0, length = colors.size();i < length;i++) {
+        for (int i = 0, length = colors.size(); i < length; i++) {
             std::cout << "color" << std::to_string(i) << ": " << Decoder::color_to_string(colors[i]) << std::endl;
         }
         std::cout << "---result---" << std::endl;
@@ -20,6 +22,7 @@ void decode(const std::vector<Color>& colors) {
 }
 
 int main() {
-    decode({Color::BROWN, Color::BLACK, Color::BLACK, Color::BROWN});
+    decode({Color::BROWN, Color::BLACK, Color::BLACK}, MultiplierColor::BROWN, ToleranceColor::BROWN,
+           TemperatureCoefficientColor::BLACK);
     return 0;
 }
