@@ -9,8 +9,8 @@
 
 class Resistor {
 public:
-    enum Type {
-        BAND4, BAND5
+    enum Type: uint8_t {
+        BAND4 = 4, BAND5 = 5, BAND6 = 6
     };
 
     Resistor() = default;
