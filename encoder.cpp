@@ -105,11 +105,10 @@ std::vector<Color> Encoder::encode(const Resistor &resistor) {
 
     float multiplier;
 
-    // ignore gold, silver multiplier
-    if ((ohm * 10 % 10) != 0) { // number place
-        multiplier = 0.1;
-    } else if ((ohm * 100 % 10) != 0) { // 2 number places
+    if ((ohm * 100 % 10) != 0) { // 2 decimal places
         multiplier = 0.01;
+    } else if ((ohm * 10 % 10) != 0) { // 1 decimal place
+        multiplier = 0.1;
     } else if (ohm < 1000) {
         multiplier = 1;
     } else if (ohm < 10000) {

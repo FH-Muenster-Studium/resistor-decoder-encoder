@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <cmath>
 
 #include "resistor.hpp"
 #include "color.hpp"
