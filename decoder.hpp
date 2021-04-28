@@ -4,12 +4,12 @@
 
 #pragma once
 
-#include "resistor.h"
-#include "color.h"
-#include "temperature_coefficient_color.h"
-#include "multiplier_color.h"
-#include "tolerance_color.h"
-#include "ohm_color.h"
+#include "resistor.hpp"
+#include "color.hpp"
+#include "temperature_coefficient_color.hpp"
+#include "multiplier_color.hpp"
+#include "tolerance_color.hpp"
+#include "ohm_color.hpp"
 #include <vector>
 #include <string>
 #include <cmath>

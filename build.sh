@@ -1,0 +1,1 @@
+g++ --std=c++17 main.cpp resistor.cpp resistor.hpp decoder.cpp decoder.hpp encoder.cpp encoder.hpp color.hpp multiplier_color.hpp temperature_coefficient_color.hpp tolerance_color.hpp

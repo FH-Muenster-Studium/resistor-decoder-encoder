@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "color.h"
+#include "color.hpp"
 
 enum class TemperatureCoefficientColor : uint8_t {
     BLACK = (uint8_t) Color::BLACK,

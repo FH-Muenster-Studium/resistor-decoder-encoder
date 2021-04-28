@@ -2,7 +2,7 @@
 // Created by Fabian Terhorst on 26.04.21.
 //
 
-#include "resistor.h"
+#include "resistor.hpp"
 
 Resistor::Resistor(Resistor::Type type, double ohm, float tolerance) {
     this->type = type;

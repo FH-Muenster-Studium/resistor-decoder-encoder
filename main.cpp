@@ -1,7 +1,7 @@
 #include <iostream>
 #include <iomanip>
-#include "decoder.h"
-#include "encoder.h"
+#include "decoder.hpp"
+#include "encoder.hpp"
 
 void decode(const std::vector<OhmColor> &colors, MultiplierColor multiplierColor, ToleranceColor toleranceColor,
             TemperatureCoefficientColor temperatureCoefficientColor) {
