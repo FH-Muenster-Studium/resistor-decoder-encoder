@@ -1,7 +1,3 @@
-//
-// Created by Fabian Terhorst on 27.04.21.
-//
-
 #pragma once
 
 #include "color.hpp"

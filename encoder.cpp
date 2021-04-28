@@ -1,7 +1,3 @@
-//
-// Created by Fabian Terhorst on 26.04.21.
-//
-
 #include "encoder.hpp"
 
 bool cmpf(float A, float B, float epsilon = 0.005f) {
